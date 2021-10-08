@@ -10,7 +10,8 @@ export default defineConfig({
     DocServer(),
     {
       ...DocBuildMove(),
-      enforce: 'post'
+      enforce: 'post',
+      apply: 'build'
     }
   ],
   build: {

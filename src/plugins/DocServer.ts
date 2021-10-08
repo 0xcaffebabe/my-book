@@ -10,7 +10,7 @@ export default function DocServer(){
     configureServer(server: ViteDevServer){
       // 处理doc目录下静态资源
       server.middlewares.use((req, res, next) => {
-        if (req.originalUrl) {
+        if (req.originalUrl && req.originalUrl !== '/') {
           const uri = decodeURI(req.originalUrl)
           const fileUri = "./doc" + uri;
           if (!fs.existsSync(fileUri)){
