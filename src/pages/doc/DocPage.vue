@@ -1,6 +1,8 @@
 <template>
   <el-container>
-    <el-aside width="200px"><category-list /></el-aside>
+    <el-aside width="200px">
+      <category-list />
+    </el-aside>
     <el-main>
       <div class="markdown-section" v-html="content"></div>
     </el-main>
@@ -34,8 +36,19 @@ export default defineComponent({
   },
   async created() {
     this.content = await docService.getDocHtml(this.$route.params.doc.toString())
+    this.$nextTick(() => {
+      console.log(this.$el)
+      const codeElmList = this.$el.querySelectorAll('code')
+      console.log(codeElmList)
+      for (let i = 0; i < codeElmList.length; i++) {
+        codeElmList[i].innerHTML = docService.hightlightCode(codeElmList[i].innerHTML)
+      }
+    })
     this.cateList = await categoryService.getCategoryList();
   },
+  mounted() {
+    
+  }
 });
 </script>
 

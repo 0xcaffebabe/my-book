@@ -13,7 +13,6 @@ class CategoryService {
 
   private static categoryParse(html: string): Category[]{
     const elm = new DOMParser().parseFromString(html, 'text/html')
-    console.log(elm)
     const topCate = elm.querySelectorAll('body > ul > li')
     const categoryList: Category[] = []
     for(let i = 0;i<topCate.length;i++){
@@ -26,9 +25,6 @@ class CategoryService {
     const category = new Category()
     category.name = cate.querySelector('a')?.innerText!
     category.link = cate.querySelector('a')?.getAttribute("href")!
-    if (cate.innerHTML.indexOf('编程语言') != -1) {
-      console.log(cate.querySelector("ul"))
-    }
     const children = cate.querySelector("ul")?.querySelectorAll(':scope > li')
     if (!children) {
       return category
