@@ -1,16 +1,30 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-</script>
-
 <template>
   <el-container>
-    <el-header>Header</el-header>
+    <el-header>
+      <Header/>
+    </el-header>
     <el-main>
       <router-view></router-view>
     </el-main>
   </el-container>
 </template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Header from './header/Header.vue'
+
+export default defineComponent({
+  components: {
+    Header
+  },
+  setup() {
+
+  },
+  data() {
+    return {}
+  }
+})
+</script>
 
 <style lang="less" scoped>
   .el-container {
@@ -18,5 +32,8 @@
   }
   .el-main {
     height: 100%;
+  }
+  .el-header {
+    padding: 0;
   }
 </style>
