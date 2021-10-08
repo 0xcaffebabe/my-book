@@ -1,18 +1,22 @@
 <template>
   <el-container>
     <el-aside width="200px"><category-list /></el-aside>
-    <el-main>Main</el-main>
+    <el-main>
+      <div class="markdown-section" v-html="content"></div>
+    </el-main>
   </el-container>
 </template>
 
 <script lang="ts">
-import { defineComponent, CreateComponentPublicInstance } from "vue";
-import Category from "@/dto/Category";
-import categoryService from "@/service/CategoryService";
-import CategoryList from "./category/CategoryList.vue";
+import { defineComponent, CreateComponentPublicInstance } from "vue"
+import Category from "@/dto/Category"
+import categoryService from "@/service/CategoryService"
+import docService from '@/service/DocService'
+import CategoryList from "./category/CategoryList.vue"
 
 interface Data {
-  cateList: Category[];
+  cateList: Category[],
+  content: string
 }
 
 export default defineComponent({
@@ -20,15 +24,16 @@ export default defineComponent({
     CategoryList,
   },
   setup() {
-    const cateList: Category[] = [];
+    const cateList: Category[] = []
   },
   data() {
     return {
       cateList: [],
+      content: ''
     } as Data;
   },
   async created() {
-    console.log(this.$route.params.doc);
+    this.content = await docService.getDocHtml(this.$route.params.doc.toString())
     this.cateList = await categoryService.getCategoryList();
   },
 });

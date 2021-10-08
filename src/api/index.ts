@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 class Api {
-  static async getMdContent(name: string){
+  static async getMdContent(name: string): Promise<string>{
     if (!name) {
       throw Error("md文件名不得为空")
     }
