@@ -5,10 +5,8 @@
       <div class="logo">app name</div>
       <div class="content">
         <el-menu
-          :default-active="activeIndex"
           class="el-menu-demo"
           mode="horizontal"
-          @select="handleSelect"
         >
           <el-menu-item index="1">Processing Center</el-menu-item>
           <el-sub-menu index="2">
