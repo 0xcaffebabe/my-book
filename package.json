@@ -17,9 +17,11 @@
     "shelljs": "^0.8.4",
     "vue": "^3.2.19",
     "vue-class-component": "^7.2.6",
-    "vue-router": "^4.0.11"
+    "vue-router": "^4.0.11",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@types/marked": "^3.0.1",
     "@types/mime": "^2.0.3",
     "@types/node": "^16.10.3",
     "@types/rimraf": "^3.0.2",
