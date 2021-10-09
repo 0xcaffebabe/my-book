@@ -10,7 +10,6 @@ class DocService {
   }
 
   static hightlightCode(code: string): string {
-    console.log(prism.languages)
     return prism.highlight(code, prism.languages.js, 'js')
   }
 }

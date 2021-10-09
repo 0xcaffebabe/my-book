@@ -25,30 +25,34 @@ export default defineComponent({
   components: {
     CategoryList,
   },
-  setup() {
-    const cateList: Category[] = []
-  },
   data() {
     return {
       cateList: [],
-      content: ''
+      content: "",
     } as Data;
   },
+  methods: {
+    async showDoc(doc: string) {
+      this.content = await docService.getDocHtml(
+        doc
+      );
+      this.$nextTick(() => {
+        const codeElmList = this.$el.querySelectorAll("code");
+        for (let i = 0; i < codeElmList.length; i++) {
+          codeElmList[i].innerHTML = docService.hightlightCode(
+            codeElmList[i].innerHTML
+          );
+        }
+      });
+    },
+  },
+  beforeRouteUpdate(to, from){
+    this.showDoc(to.params.doc.toString())
+  },
   async created() {
-    this.content = await docService.getDocHtml(this.$route.params.doc.toString())
-    this.$nextTick(() => {
-      console.log(this.$el)
-      const codeElmList = this.$el.querySelectorAll('code')
-      console.log(codeElmList)
-      for (let i = 0; i < codeElmList.length; i++) {
-        codeElmList[i].innerHTML = docService.hightlightCode(codeElmList[i].innerHTML)
-      }
-    })
+    this.showDoc(this.$route.params.doc.toString())
     this.cateList = await categoryService.getCategoryList();
   },
-  mounted() {
-    
-  }
 });
 </script>
 

@@ -1,6 +1,6 @@
 <template>
     <template v-for="value in this.menuList">
-      <el-sub-menu :index="value.link" v-if="value.chidren" :key="value.link">
+      <el-sub-menu :index="value.link" v-if="value.chidren.length != 0" :key="value.link">
         <template #title>
           <span>{{ value.name }}</span>
         </template>
@@ -29,5 +29,3 @@ export default defineComponent({
   setup() {},
 });
 </script>
-
-style

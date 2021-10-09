@@ -1,5 +1,5 @@
 <template>
-  <el-menu unique-opened :default-active="activeIndex">
+  <el-menu unique-opened @select="handleSelect" @open="handleOpen">
     <CategoryTree :menuList="cateList"/>
   </el-menu>
 </template>
@@ -11,8 +11,7 @@ import Category from '@/dto/Category'
 import CategoryTree from './CategoryTree.vue'
 
 interface Data {
-  cateList: Category[],
-  activeIndex: string
+  cateList: Category[]
 }
 
 export default defineComponent({
@@ -24,9 +23,21 @@ export default defineComponent({
   },
   data() {
     return {
-      cateList: [],
-      activeIndex: ''
+      cateList: []
     } as Data
+  },
+  methods: {
+    handleSelect(index: string){
+      this.showDoc(index)
+    },
+    handleOpen(index: string) {
+      this.showDoc(index)
+    },
+    showDoc(index: string) {
+      let uri = decodeURI(index)
+      let doc = uri.split('/').splice(1).join('-').replace('.md', '')
+      this.$router.push('/doc/' + doc)
+    }
   },
   async created(){
     this.cateList = await categoryService.getCategoryList()
