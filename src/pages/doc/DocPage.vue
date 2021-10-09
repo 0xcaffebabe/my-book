@@ -1,9 +1,11 @@
 <template>
   <el-container>
     <el-aside width="200px">
-      <category-list />
+      <div class="category-wrapper">
+        <category-list/>
+      </div>
     </el-aside>
-    <el-main>
+    <el-main class="main">
       <div class="markdown-section" v-html="content"></div>
     </el-main>
   </el-container>
@@ -57,4 +59,12 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+  .category-wrapper {
+    position:fixed;
+    overflow-y: scroll;
+    height: calc(100% - 80px);
+  }
+  .markdown-section {
+    padding-left: 40px;
+  }
 </style>

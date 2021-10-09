@@ -1,7 +1,9 @@
 <template>
   <el-container>
     <el-header>
-      <Header/>
+      <el-affix :offset="0">
+        <Header/>
+      </el-affix>
     </el-header>
     <el-main>
       <router-view></router-view>
@@ -35,5 +37,6 @@ export default defineComponent({
   }
   .el-header {
     padding: 0;
+    background-color: #fff;
   }
 </style>
