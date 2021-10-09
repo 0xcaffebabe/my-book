@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import DocServer from './src/plugins/DocServer'
 import DocBuildMove from './src/plugins/DocBuildMove'
+import WordCloudGenrator from './src/plugins/WordCloudGenerator'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -22,6 +23,10 @@ export default defineConfig({
     {
       ...DocBuildMove(),
       enforce: 'post',
+      apply: 'build'
+    },
+    {
+      ...WordCloudGenrator(),
       apply: 'build'
     }
   ],
