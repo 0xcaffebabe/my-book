@@ -21,6 +21,19 @@ class Api {
     const data = await axios.get("SUMMARY.md")
     return data.data;
   }
+
+
+  /**
+   *
+   * 获取词云数据
+   * @static
+   * @return {*}  {Promise<[string, number][]>}
+   * @memberof Api
+   */
+  static async getWordCloud(): Promise<[string, number][]>{
+    const data = await axios.get('/wordcloud.json')
+    return data.data
+  }
 }
 
 export default Api
