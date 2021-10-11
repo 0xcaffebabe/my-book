@@ -63,24 +63,25 @@ export default defineComponent({
 .toc:hover {
   overflow-y:auto;
 }
-.toc :depp(a){
+.toc :deep(a){
     color: rgb(116, 129, 141);
     text-decoration: none;
     font-weight: 550;
+    font-size: 14px;
     text-decoration: none;
 }
 :deep(a:hover) {
-  color: #3E90E8;
+  color: #3E90E8!important;
 }
 :deep(.active)  {
-  color:#3e90e8;
+  color: #3E90E8!important;
 }
 ul, :deep(ul) {
   padding: 0 24px;
   list-style:none;
 }
 li {
-  padding: 5px 0;
+  padding: 8px 0;
 }
 :deep(li a:hover:before) {
   position:absolute;

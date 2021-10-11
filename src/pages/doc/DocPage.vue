@@ -97,4 +97,7 @@ export default defineComponent({
     top: 80px;
     right: 40px;
   }
+  .markdown-section {
+    max-width: 80%;
+  }
 </style>
