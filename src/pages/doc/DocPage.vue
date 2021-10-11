@@ -6,10 +6,13 @@
       </div>
     </el-aside>
     <el-main class="main">
-      <div class="markdown-section" v-html="content"></div>
+      <div class="markdown-section" v-html="contentHtml"></div>
       <div class="toc-wrapper">
         <contents-list :contentsList="contentsList"/>
       </div>
+      <el-footer style="text-align:center">
+        <el-divider/>
+      </el-footer>
     </el-main>
   </el-container>
 </template>
@@ -22,10 +25,13 @@ import categoryService from "@/service/CategoryService"
 import docService from '@/service/DocService'
 import CategoryList from "./category/CategoryList.vue"
 import ContentsList from "./contents/ContentsList.vue"
+import api from '@/api'
+import DocFileInfo from "@/dto/DocFileInfo"
+import DocService from "@/service/DocService"
 
 interface Data {
   cateList: Category[],
-  content: string,
+  file: DocFileInfo,
   contentsList: Content[]
 }
 
@@ -37,17 +43,19 @@ export default defineComponent({
   data() {
     return {
       cateList: [],
-      content: "",
+      file: new DocFileInfo(),
       contentsList: []
     } as Data;
   },
+  computed: {
+    contentHtml(): string {
+      return DocService.renderMd(this.file.content)
+    }
+  },
   methods: {
     async showDoc(doc: string) {
-      this.content = await docService.getDocHtml(
-        doc
-      );
+      this.file = await api.getDocFileInfo(doc)
       this.generateTOC()
-      console.log(docService.getContent(this.content))
       this.$nextTick(() => {
         const codeElmList = this.$el.querySelectorAll("code");
         for (let i = 0; i < codeElmList.length; i++) {
@@ -58,7 +66,7 @@ export default defineComponent({
       });
     },
     generateTOC(){
-      this.contentsList = docService.getContent(this.content)
+      this.contentsList = docService.getContent(this.contentHtml)
     }
   },
   beforeRouteUpdate(to, from){
@@ -77,8 +85,9 @@ export default defineComponent({
     overflow-y: scroll;
     height: calc(100% - 60px);
   }
-  .markdown-section {
-    padding-left: 40px;
+  .main {
+    padding-left: 14em;
+    padding-bottom: 0;
   }
   .toc-wrapper {
     position: fixed;

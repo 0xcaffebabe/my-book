@@ -4,10 +4,9 @@ import prism from 'prismjs'
 import Content from '@/dto/Content'
 
 class DocService {
-  static async getDocHtml(doc: string): Promise<string> {
-    const md = await api.getMdContent(doc)
-    const html = marked(md)
-    return html
+
+  static renderMd(mdContent: string) : string {
+    return marked(mdContent)
   }
 
   static hightlightCode(code: string): string {

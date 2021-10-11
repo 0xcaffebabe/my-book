@@ -1,11 +1,12 @@
 import axios from 'axios'
+import DocFileInfo from '@/dto/DocFileInfo'
 
 class Api {
-  static async getMdContent(name: string): Promise<string>{
+  static async getDocFileInfo(name: string): Promise<DocFileInfo>{
     if (!name) {
-      throw Error("md文件名不得为空")
+      throw Error("doc文件名不得为空")
     }
-    name = "/" + name.replace(/-/g, '/') + ".md"
+    name = "/" + name.replace(/-/g, '/') + ".md.json"
     const data = await axios.get(name)
     return data.data
   }
