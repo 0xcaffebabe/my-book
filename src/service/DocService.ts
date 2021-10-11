@@ -48,6 +48,7 @@ class DocService {
         for(let i = level - 1;i >= 1; i--) {
           if (contentMap[i]) {
             contentMap[i].chidren.push(content)
+            break
           }
         }
       }
