@@ -2,7 +2,7 @@
   <el-container>
     <el-aside width="200px">
       <div class="category-wrapper">
-        <category-list/>
+        <category-list ref="categoryList" :doc="doc"/>
       </div>
     </el-aside>
     <el-main class="main">
@@ -33,6 +33,7 @@ interface Data {
   cateList: Category[],
   file: DocFileInfo,
   contentsList: Content[]
+  doc: string
 }
 
 export default defineComponent({
@@ -44,7 +45,8 @@ export default defineComponent({
     return {
       cateList: [],
       file: new DocFileInfo(),
-      contentsList: []
+      contentsList: [],
+      doc: ''
     } as Data;
   },
   computed: {
@@ -54,6 +56,7 @@ export default defineComponent({
   },
   methods: {
     async showDoc(doc: string) {
+      this.doc = doc
       this.file = await api.getDocFileInfo(doc)
       this.generateTOC()
       this.$nextTick(() => {

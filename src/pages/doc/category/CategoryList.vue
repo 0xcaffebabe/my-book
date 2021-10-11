@@ -1,5 +1,5 @@
 <template>
-  <el-menu unique-opened @select="handleSelect" @open="handleOpen">
+  <el-menu unique-opened  @open="handleOpen" :default-active="doc" :router="true">
     <CategoryTree :menuList="cateList"/>
   </el-menu>
 </template>
@@ -15,6 +15,9 @@ interface Data {
 }
 
 export default defineComponent({
+  props: {
+    doc: String
+  },
   components: {
     CategoryTree
   },
@@ -23,7 +26,8 @@ export default defineComponent({
   },
   data() {
     return {
-      cateList: []
+      cateList: [],
+      activeMenu: ''
     } as Data
   },
   methods: {
@@ -31,15 +35,16 @@ export default defineComponent({
       this.showDoc(index)
     },
     handleOpen(index: string) {
-      this.showDoc(index)
+      if (index) {
+        this.showDoc(index.substring(0, index.length - 1))
+      }
     },
     showDoc(index: string) {
-      let uri = decodeURI(index)
-      let doc = uri.split('/').splice(1).join('-').replace('.md', '')
-      this.$router.push('/doc/' + doc)
+      this.$router.push('/doc/' + index)
     }
   },
   async created(){
+    console.log(this.doc)
     this.cateList = await categoryService.getCategoryList()
   },
 })

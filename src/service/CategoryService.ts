@@ -11,6 +11,14 @@ class CategoryService {
     return CategoryService.categoryParse(html)
   }
 
+  public static docUrl2Id(url :string): string {
+    if (!url) {
+      return ""
+    }
+    url = decodeURI(url)
+    return url.split('/').splice(1).join('-').replace('.md', '')
+  }
+
   private static categoryParse(html: string): Category[]{
     const elm = new DOMParser().parseFromString(html, 'text/html')
     const topCate = elm.querySelectorAll('body > ul > li')
