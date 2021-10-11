@@ -2,22 +2,25 @@
   <el-container>
     <el-header>
       <el-affix :offset="0">
-        <Header/>
+        <Header @search="$refs.search.show()"/>
       </el-affix>
     </el-header>
     <el-main>
       <router-view></router-view>
     </el-main>
   </el-container>
+  <Search ref="search"/>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Header from './components/header/Header.vue'
+import Search from '@/components/search/Search.vue'
 
 export default defineComponent({
   components: {
-    Header
+    Header,
+    Search
   },
   setup() {
 

@@ -3,6 +3,9 @@
     <div class="header-wrapper">
     <div class="container">
       <div class="logo">app name</div>
+      <div>
+        <el-button type="primary" class="search" @click="$emit('search')">Search</el-button>
+      </div>
       <div class="content">
         <el-menu
           class="el-menu-demo"
@@ -43,6 +46,11 @@
   display: flex;
   justify-content: space-between;
   .logo {
+    display: flex;
+    align-items: center;
+  }
+  .search {
+    height: 24px;
     display: flex;
     align-items: center;
   }
