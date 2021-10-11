@@ -34,6 +34,7 @@ export default defineComponent({
   }
   .el-main {
     height: 100%;
+    padding: 0;
   }
   .el-header {
     padding: 0;

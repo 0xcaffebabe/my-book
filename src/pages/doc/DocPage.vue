@@ -75,7 +75,7 @@ export default defineComponent({
   .category-wrapper {
     position:fixed;
     overflow-y: scroll;
-    height: calc(100% - 80px);
+    height: calc(100% - 60px);
   }
   .markdown-section {
     padding-left: 40px;

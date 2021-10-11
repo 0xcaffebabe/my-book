@@ -34,6 +34,7 @@
 .header {
   border-bottom: 1px solid #ccc;
   padding: 0;
+  background-color: #fff;
 }
 .header-wrapper {
   padding: 0 32px;
