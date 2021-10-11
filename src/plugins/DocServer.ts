@@ -4,8 +4,15 @@ import fs from 'fs'
 import path from 'path'
 import mime from 'mime'
 import WordCloudService from '../build/WordCloudService'
+import GitService from '../build/GitService'
+import CommitInfo from '@/dto/CommitInfo'
+import DocService from '../build/DocService'
 
 let wordcloud: [string, number][] = []
+interface DocFileInfo {
+  content: string,
+  commitList: CommitInfo[]
+}
 
 export default function DocServer(){
   return {
@@ -20,8 +27,28 @@ export default function DocServer(){
             next()
             return
           }
+          if (fileUri.endsWith('.md')) {
+            GitService.getFileCommitList(fileUri)
+          }
           res.writeHead(200, { 'Content-Type': `${mime.getType(path.extname(uri))};charset=utf8` });
           res.write(fs.readFileSync(fileUri))
+          res.end()
+        }else{
+          next()
+        }
+      })
+      // 处理md文件
+      server.middlewares.use(async (req, res, next) => {
+        if (req.originalUrl && req.originalUrl.endsWith('.md.json')) {
+          const uri = decodeURI(req.originalUrl)
+          const mdFileUri = "./doc" + uri.substring(0,uri.lastIndexOf('.'));
+          console.log(mdFileUri)
+          if (!fs.existsSync(mdFileUri)){
+            next()
+            return
+          }
+          res.writeHead(200, { 'Content-Type': `application/json;charset=utf8` });
+          res.write(JSON.stringify(await DocService.getFileInfo(mdFileUri)))
           res.end()
         }else{
           next()

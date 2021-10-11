@@ -16,6 +16,7 @@
     "prismjs": "^1.25.0",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
+    "simple-git": "^2.46.0",
     "vue": "^3.2.19",
     "vue-class-component": "^7.2.6",
     "vue-router": "^4.0.11",

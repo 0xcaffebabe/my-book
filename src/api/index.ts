@@ -5,7 +5,7 @@ class Api {
     if (!name) {
       throw Error("md文件名不得为空")
     }
-    name = name.replace(/-/g, '/') + ".md"
+    name = "/" + name.replace(/-/g, '/') + ".md"
     const data = await axios.get(name)
     return data.data
   }
@@ -18,7 +18,7 @@ class Api {
    * @memberof Api
    */
   static async getCategory(){
-    const data = await axios.get("SUMMARY.md")
+    const data = await axios.get("/SUMMARY.md")
     return data.data;
   }
 
