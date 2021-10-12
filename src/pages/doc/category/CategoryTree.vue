@@ -8,25 +8,52 @@
       <template #title>
         <div>
           <span>{{ value.name }}</span>
-          <el-badge :max="500" :value="childrenSize(value)" class="item" type="primary" style="margin-left:8px"/>
+          <el-badge
+            :max="500"
+            :value="childrenSize(value)"
+            class="item"
+            type="primary"
+            style="margin-left: 8px"
+          />
         </div>
       </template>
-      <el-menu-item :index="convert(value.link)" :key="convert(value.link)">
-        <template #title>
-          <span>{{ value.name }}</span>
+      <el-popover
+        placement="right-start"
+        :title="value.name"
+        :width="200"
+        trigger="hover"
+        :hide-after="100"
+        content="this is content, this is content, this is content"
+      >
+        <template #reference>
+          <el-menu-item :index="convert(value.link)" :key="convert(value.link)">
+            <template #title>
+              <span>{{ value.name }}</span>
+            </template>
+          </el-menu-item>
         </template>
-      </el-menu-item>
+      </el-popover>
+
       <category-tree :menuList="value.chidren"></category-tree>
     </el-sub-menu>
-    <el-menu-item
-      :index="convert(value.link)"
+    <el-popover
+      placement="right-start"
+      :title="value.name"
+      :width="200"
+      trigger="hover"
+      :hide-after="100"
+      content="this is content, this is content, this is content"
       v-else
       :key="convert(value.link)"
     >
-      <template #title>
-        <span>{{ value.name }}</span>
+      <template #reference>
+        <el-menu-item :index="convert(value.link)">
+          <template #title>
+            <span>{{ value.name }}</span>
+          </template>
+        </el-menu-item>
       </template>
-    </el-menu-item>
+    </el-popover>
   </template>
 </template>
 
