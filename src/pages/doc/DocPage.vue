@@ -85,6 +85,7 @@ export default defineComponent({
     position:fixed;
     overflow-y: scroll;
     height: calc(100% - 60px);
+    width: 280px;
   }
   .main {
     padding-left: 14em;
@@ -97,6 +98,24 @@ export default defineComponent({
   }
   .markdown-section {
     max-width: 80%;
+    :deep(h1) {
+      font-size: 32px;
+    }
+    :deep(h2) {
+      font-size: 28px;
+    }
+    :deep(h3) {
+      font-size: 24px;
+    }
+    :deep(h4) {
+      font-size: 20px;
+    }
+    :deep(h5) {
+      font-size: 16px;
+    }
+    :deep(h6) {
+      font-size: 12px;
+    }
     :deep(pre) {
       background-color: #282C34;
       border-radius: 5px;

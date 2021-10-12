@@ -39,3 +39,11 @@ export default defineComponent({
   setup() {},
 });
 </script>
+
+<style lang="less" scoped>
+  .el-menu-item.is-active {
+    transition: all 0.2s;
+    border-left: 4px solid #409EEF;
+    padding-left: 36px!important;
+  }
+</style>
