@@ -2,6 +2,24 @@ import api from '@/api'
 import marked from 'marked'
 import prism from 'prismjs'
 import Content from '@/dto/Content'
+import { load } from 'nodejieba'
+
+const LANGUAGE_MAP = {
+  'c': 'clike',
+  'java': 'clike',
+  'cpp': 'clike',
+  'c++': 'clike',
+  'html': 'markup',
+  'xml': 'markup',
+  'python': 'clike',
+  'c#': 'clike',
+  'ts': 'javascript',
+  'js': 'javascript',
+  'typesscript': 'javascript',
+  'go': 'clike',
+  'conf': 'markup',
+  'ruby': 'clike',
+} as Record<string, string>
 
 class DocService {
 
@@ -9,8 +27,17 @@ class DocService {
     return marked(mdContent)
   }
 
-  static hightlightCode(code: string): string {
-    return prism.highlight(code, prism.languages.js, 'js')
+  static hightlightCode(code: string, lang: string | undefined): string {
+    if (!lang) {
+      lang = 'clike'
+    }else {
+      if (LANGUAGE_MAP[lang]) {
+        lang = LANGUAGE_MAP[lang]
+      }else {
+        lang = 'clike'
+      }
+    }
+    return prism.highlight(code, prism.languages[lang], lang)
   }
 
   public static docUrl2Id(url :string): string {

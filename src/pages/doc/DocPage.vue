@@ -60,11 +60,9 @@ export default defineComponent({
       this.file = await api.getDocFileInfo(doc)
       this.generateTOC()
       this.$nextTick(() => {
-        const codeElmList = this.$el.querySelectorAll("code");
+        const codeElmList: NodeListOf<HTMLElement> = document.querySelectorAll(".markdown-section code");
         for (let i = 0; i < codeElmList.length; i++) {
-          codeElmList[i].innerHTML = docService.hightlightCode(
-            codeElmList[i].innerHTML
-          );
+          codeElmList[i].innerHTML = docService.hightlightCode(codeElmList[i].innerHTML, codeElmList[i].getAttribute('class')?.replace('language-', ''));
         }
       });
     },
@@ -99,5 +97,11 @@ export default defineComponent({
   }
   .markdown-section {
     max-width: 80%;
+    :deep(pre) {
+      background-color: #282C34;
+      border-radius: 5px;
+      padding: 1.25rem 1.5rem;
+      font-size: 16px;
+    }
   }
 </style>
