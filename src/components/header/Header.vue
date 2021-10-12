@@ -3,10 +3,10 @@
     <div class="header-wrapper">
     <div class="container">
       <div class="logo">app name</div>
-      <div>
-        <el-button type="primary" class="search" @click="$emit('search')">Search</el-button>
-      </div>
       <div class="content">
+        <div>
+          <el-button icon="el-icon-search" class="search" @click="$emit('search')" size="mini" round></el-button>
+        </div>
         <el-menu
           class="el-menu-demo"
           mode="horizontal"
@@ -52,6 +52,11 @@
   .search {
     height: 24px;
     display: flex;
+    align-items: center;
+  }
+  .content {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
   }
   .content /deep/ .el-menu {
