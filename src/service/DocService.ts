@@ -13,6 +13,14 @@ class DocService {
     return prism.highlight(code, prism.languages.js, 'js')
   }
 
+  public static docUrl2Id(url :string): string {
+    if (!url) {
+      return ""
+    }
+    url = decodeURI(url)
+    return url.split('/').splice(1).join('-').replace('.md', '')
+  }
+
 
   /**
    *
