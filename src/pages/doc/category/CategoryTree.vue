@@ -17,43 +17,11 @@
           />
         </div>
       </template>
-      <el-popover
-        placement="right-start"
-        :title="value.name"
-        :width="200"
-        trigger="hover"
-        :hide-after="100"
-        content="this is content, this is content, this is content"
-      >
-        <template #reference>
-          <el-menu-item :index="convert(value.link)" :key="convert(value.link)">
-            <template #title>
-              <span>{{ value.name }}</span>
-            </template>
-          </el-menu-item>
-        </template>
-      </el-popover>
+      <category-item :value="value" />
 
       <category-tree :menuList="value.chidren"></category-tree>
     </el-sub-menu>
-    <el-popover
-      placement="right-start"
-      :title="value.name"
-      :width="200"
-      trigger="hover"
-      :hide-after="100"
-      content="this is content, this is content, this is content"
-      v-else
-      :key="convert(value.link)"
-    >
-      <template #reference>
-        <el-menu-item :index="convert(value.link)">
-          <template #title>
-            <span>{{ value.name }}</span>
-          </template>
-        </el-menu-item>
-      </template>
-    </el-popover>
+    <category-item v-else :value="value" :key="convert(value.link)"/>
   </template>
 </template>
 
@@ -61,8 +29,12 @@
 import { defineComponent } from "vue";
 import categoryService from "@/service/CategoryService";
 import Category from "@/dto/Category";
+import CategoryItem from './CategoryItem.vue'
 
 export default defineComponent({
+  components: {
+    CategoryItem
+  },
   props: {
     menuList: Array,
   },
