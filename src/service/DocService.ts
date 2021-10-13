@@ -2,7 +2,6 @@ import api from '@/api'
 import marked from 'marked'
 import prism from 'prismjs'
 import Content from '@/dto/Content'
-import { load } from 'nodejieba'
 
 const LANGUAGE_MAP = {
   'c': 'clike',
@@ -24,7 +23,17 @@ const LANGUAGE_MAP = {
 class DocService {
 
   static renderMd(mdContent: string) : string {
-    return marked(mdContent)
+    const render = new marked.Renderer()
+    render.link = function(href: string | null, title: string | null, text: string | null) : string{
+      if (!href?.startsWith('http')) {
+        return `<a href='/doc/${DocService.docUrl2Id(href!)}'>${text}</a>`
+      }else {
+        return `<a href='${href}'>${text}</a>`
+      }
+    }
+    return  marked(mdContent, {
+      renderer: render
+    })
   }
 
   static hightlightCode(code: string, lang: string | undefined): string {
