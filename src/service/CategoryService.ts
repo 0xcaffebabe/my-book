@@ -19,7 +19,14 @@ class CategoryService {
   public async getCategoryList() : Promise<Category[]>{
     const rawData = await api.getCategory()
     const html = marked(rawData.content)
-    return this.categoryParse(html)
+    return [
+      {
+        name: '首页',
+        link: './README.md',
+        chidren: []
+      },
+      ...this.categoryParse(html)
+    ]
   }
 
   public docUrl2Id(url :string): string {
