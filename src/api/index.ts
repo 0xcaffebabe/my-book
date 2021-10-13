@@ -1,8 +1,20 @@
 import axios from 'axios'
 import DocFileInfo from '@/dto/DocFileInfo'
+import Cache from '@/decorator/Cache'
+import Cacheable from '@/decorator/Cacheable'
 
-class Api {
-  static async getDocFileInfo(name: string): Promise<DocFileInfo>{
+const cache = Cache()
+
+class Api implements Cacheable{
+  private static instance :Api
+  public name(): string {
+    return 'api'
+  }
+
+  private constructor(){}
+
+  @cache
+  public async getDocFileInfo(name: string): Promise<DocFileInfo>{
     if (!name) {
       throw Error("doc文件名不得为空")
     }
@@ -18,7 +30,7 @@ class Api {
    * @static
    * @memberof Api
    */
-  static async getCategory(){
+  public async getCategory(){
     const data = await axios.get("/SUMMARY.md")
     return data.data;
   }
@@ -31,10 +43,17 @@ class Api {
    * @return {*}  {Promise<[string, number][]>}
    * @memberof Api
    */
-  static async getWordCloud(): Promise<[string, number][]>{
+  public async getWordCloud(): Promise<[string, number][]>{
     const data = await axios.get('/wordcloud.json')
     return data.data
   }
+
+  public static getInstance(){
+    if (!this.instance) {
+      this.instance = new Api()
+    }
+    return this.instance;
+  }
 }
 
-export default Api
+export default Api.getInstance()
