@@ -30,8 +30,8 @@ class Api implements Cacheable{
    * @static
    * @memberof Api
    */
-  public async getCategory(){
-    const data = await axios.get("/SUMMARY.md")
+  public async getCategory() : Promise<DocFileInfo>{
+    const data = await axios.get("/SUMMARY.md.json")
     return data.data;
   }
 

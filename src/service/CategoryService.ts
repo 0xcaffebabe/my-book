@@ -18,7 +18,7 @@ class CategoryService {
 
   public async getCategoryList() : Promise<Category[]>{
     const rawData = await api.getCategory()
-    const html = marked(rawData)
+    const html = marked(rawData.content)
     return this.categoryParse(html)
   }
 
