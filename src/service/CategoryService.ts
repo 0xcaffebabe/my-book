@@ -62,7 +62,9 @@ class CategoryService implements Cacheable {
       return category
     }
     for(let i = 0;i<children.length;i++){
-      category.chidren.push(this.resolveCategory(children[i]))
+      const c = this.resolveCategory(children[i])
+      c.parent = category
+      category.chidren.push(c)
     }
     return category
   }
