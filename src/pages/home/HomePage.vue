@@ -7,14 +7,19 @@
       <el-button type="success" round size="medium" @click="handleContinueRead">继续阅读</el-button>
     </div>
   </div>
+    <statistic />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import api from '../api'
+import api from '../../api'
 import docService from '@/service/DocService'
+import Statistic from './Statistic.vue'
 
 export default defineComponent({
+  components: {
+    Statistic
+  },
   setup() {
 
   },

@@ -2,6 +2,7 @@ import axios from 'axios'
 import DocFileInfo from '@/dto/DocFileInfo'
 import Cache from '@/decorator/Cache'
 import Cacheable from '@/decorator/Cacheable'
+import { StatisticInfo } from '@/dto/StatisticInfo'
 
 const cache = Cache()
 
@@ -46,6 +47,18 @@ class Api implements Cacheable{
   public async getWordCloud(): Promise<[string, number][]>{
     const data = await axios.get('/wordcloud.json')
     return data.data
+  }
+
+
+  /**
+   *
+   * 获取统计信息
+   * @return {*}  {Promise<StatisticInfo>}
+   * @memberof Api
+   */
+  @cache
+  public async getStatisticInfo(): Promise<StatisticInfo> {
+    return (await axios.get('/info.json')).data
   }
 
   public static getInstance(){

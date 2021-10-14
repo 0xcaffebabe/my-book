@@ -9,6 +9,7 @@ class StatisticService extends BaseService {
 
   public static async generateStatistic(): Promise<StatisticInfo> {
     const info = new StatisticInfo()
+    info.generateTime = new Date().toISOString()
     const filelist = this.listAllFile('doc')
     const result = await Promise.all([this.getRepositorySize(), this.getCommitStatistic(), this.getWordStatistic(), this.getCodeFrequency()])
     info.repositorySize = result[0]
