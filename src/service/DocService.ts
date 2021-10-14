@@ -24,11 +24,12 @@ class DocService {
 
   static renderMd(mdContent: string) : string {
     const render = new marked.Renderer()
+    // 自定义url渲染
     render.link = function(href: string | null, title: string | null, text: string | null) : string{
       if (!href?.startsWith('http')) {
         return `<a href='/doc/${DocService.docUrl2Id(href!)}'>${text}</a>`
       }else {
-        return `<a href='${href}'>${text}</a>`
+        return `<a href='${href}' target="_blank">${text}</a>`
       }
     }
     return  marked(mdContent, {

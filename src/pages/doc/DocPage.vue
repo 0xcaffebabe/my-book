@@ -64,10 +64,25 @@ export default defineComponent({
         for (let i = 0; i < codeElmList.length; i++) {
           codeElmList[i].innerHTML = docService.hightlightCode(codeElmList[i].innerHTML, codeElmList[i].getAttribute('class')?.replace('language-', ''));
         }
+        this.registerLinkRouter()
       });
     },
     generateTOC(){
       this.contentsList = docService.getContent(this.contentHtml)
+    },
+    // 管理内页链接跳转行为
+    registerLinkRouter(){
+      const aList: NodeListOf<HTMLElement> = document.querySelectorAll('.markdown-section a');
+      for(let i = 0;i<aList.length;i++) {
+        const a = aList[i]
+        a.onclick = (e: Event) => {
+          const href = a.getAttribute("href")
+          if (href?.startsWith("doc") || href?.startsWith("/doc")) {
+            this.$router.push(href)
+            e.preventDefault();
+          }
+        }
+      }
     }
   },
   beforeRouteUpdate(to, from){
