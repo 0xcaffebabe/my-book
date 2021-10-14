@@ -60,10 +60,6 @@ export default defineComponent({
       this.file = await api.getDocFileInfo(doc)
       this.generateTOC()
       this.$nextTick(() => {
-        const codeElmList: NodeListOf<HTMLElement> = document.querySelectorAll(".markdown-section code");
-        for (let i = 0; i < codeElmList.length; i++) {
-          codeElmList[i].innerHTML = docService.hightlightCode(codeElmList[i].innerHTML, codeElmList[i].getAttribute('class')?.replace('language-', ''));
-        }
         this.registerLinkRouter()
       });
     },

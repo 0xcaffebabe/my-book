@@ -32,6 +32,10 @@ class DocService {
         return `<a href='${href}' target="_blank">${text}</a>`
       }
     }
+    // 自定义代码块渲染
+    render.code = (code: string, language: string | undefined, isEscaped: boolean) :string => {
+      return `<pre><code class="language-${language}">${this.hightlightCode(code, language)}</code></pre>`
+    }
     return  marked(mdContent, {
       renderer: render
     })
