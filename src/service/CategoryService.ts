@@ -1,13 +1,18 @@
 import marked from 'marked'
 import api from '@/api'
 import Category from '@/dto/Category'
+import Cacheable from '@/decorator/Cacheable'
+import Cache from '@/decorator/Cache'
+const cache = Cache()
 
-
-class CategoryService {
+class CategoryService implements Cacheable {
 
   private static instance : CategoryService
 
   private constructor(){}
+  name(): string {
+    return 'category-service'
+  }
 
   public static getInstance(){
     if (!this.instance) {
@@ -16,6 +21,7 @@ class CategoryService {
     return this.instance
   }
 
+  @cache
   public async getCategoryList() : Promise<Category[]>{
     const rawData = await api.getCategory()
     const html = marked(rawData.content)

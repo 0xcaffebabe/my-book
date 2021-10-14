@@ -2,7 +2,9 @@
   <el-container>
     <el-aside width="200px">
       <div class="category-wrapper">
-        <category-list ref="categoryList" :doc="doc"/>
+        <keep-alive>
+          <category-list ref="categoryList" :doc="doc"/>
+        </keep-alive>
       </div>
     </el-aside>
     <el-main class="main">
@@ -12,7 +14,9 @@
         </template>
       </el-skeleton>
       <div class="toc-wrapper">
-        <contents-list :contentsList="contentsList"/>
+        <keep-alive>
+          <contents-list :contentsList="contentsList"/>
+        </keep-alive>
       </div>
       <el-footer style="text-align:center">
         <el-divider/>
