@@ -55,6 +55,10 @@ class DocService implements Cacheable{
     render.code = (code: string, language: string | undefined, isEscaped: boolean) :string => {
       return `<pre><code class="language-${language}">${this.hightlightCode(code, language)}</code></pre>`
     }
+    // 自定义图片渲染
+    render.image = (href: string | null, title: string | null, text: string): string => {
+      return `<p class="img-wrapper" style="text-align:center"><img src='${href}'/></p>`
+    }
     return  marked(mdContent, {
       renderer: render
     })

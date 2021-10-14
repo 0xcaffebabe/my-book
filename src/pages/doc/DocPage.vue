@@ -109,6 +109,9 @@ export default defineComponent({
   }
   .markdown-section {
     max-width: 80%;
+    :deep(.img-wrapper img) {
+      max-width: 60%;
+    }
     :deep(h1) {
       font-size: 32px;
     }
