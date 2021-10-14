@@ -6,7 +6,11 @@
       </div>
     </el-aside>
     <el-main class="main">
-      <div class="markdown-section" v-html="contentHtml"></div>
+      <el-skeleton :rows="25" animated :loading="loading" :throttle="1000" style="max-width: 80%;">
+        <template #default>
+          <div class="markdown-section" v-html="contentHtml"></div>
+        </template>
+      </el-skeleton>
       <div class="toc-wrapper">
         <contents-list :contentsList="contentsList"/>
       </div>
@@ -29,13 +33,6 @@ import api from '@/api'
 import DocFileInfo from "@/dto/DocFileInfo"
 import DocService from "@/service/DocService"
 
-interface Data {
-  cateList: Category[],
-  file: DocFileInfo,
-  contentsList: Content[]
-  doc: string
-}
-
 export default defineComponent({
   components: {
     CategoryList,
@@ -43,11 +40,12 @@ export default defineComponent({
   },
   data() {
     return {
-      cateList: [],
-      file: new DocFileInfo(),
-      contentsList: [],
-      doc: ''
-    } as Data;
+      cateList: [] as Category[],
+      file: new DocFileInfo() as DocFileInfo,
+      contentsList: [] as Content[],
+      doc: '' as string,
+      loading: true as boolean
+    };
   },
   computed: {
     contentHtml(): string {
@@ -56,12 +54,14 @@ export default defineComponent({
   },
   methods: {
     async showDoc(doc: string) {
+      this.loading = true
       this.doc = doc
       this.file = await api.getDocFileInfo(doc)
       this.generateTOC()
       this.$nextTick(() => {
         this.registerLinkRouter()
       });
+      this.loading = false
     },
     generateTOC(){
       this.contentsList = docService.getContent(this.contentHtml)
