@@ -3,7 +3,7 @@
     <div class="header-wrapper">
       <div class="container">
         <div class="logo">
-          <a href="#">
+          <a href="#" @click="$router.push('/')">
             {{ name }}
           </a>
         </div>

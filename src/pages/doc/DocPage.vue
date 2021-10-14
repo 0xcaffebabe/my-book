@@ -54,6 +54,7 @@ export default defineComponent({
   },
   methods: {
     async showDoc(doc: string) {
+      docService.setDocReadRecrod(doc, window.scrollY)
       this.loading = true
       this.doc = doc
       this.file = await api.getDocFileInfo(doc)
@@ -79,12 +80,23 @@ export default defineComponent({
           }
         }
       }
+    },
+    // 滚动监听
+    registerScrollListener(){
+      let timer: NodeJS.Timeout
+      document.addEventListener("scroll", (e) => {
+        timer = setTimeout(() => {
+          clearTimeout(timer)
+          docService.setDocReadRecrod(this.doc, window.scrollY)
+        }, 1000);
+      })
     }
   },
   beforeRouteUpdate(to, from){
     this.showDoc(to.params.doc.toString())
   },
   async created() {
+    this.registerScrollListener()
     this.showDoc(this.$route.params.doc.toString())
     this.cateList = await categoryService.getCategoryList();
   },

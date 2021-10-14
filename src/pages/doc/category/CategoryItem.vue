@@ -60,7 +60,6 @@ export default defineComponent({
     async handlePopoverShow() {
       this.file = await api.getDocFileInfo(this.convert(this.value!.link));
       this.lastPastDays = this.calcLastUpdate();
-      console.log(this.file);
       this.loading = false;
     },
     handlePopoverHide() {

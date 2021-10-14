@@ -64,6 +64,54 @@ class DocService implements Cacheable{
     })
   }
 
+
+  /**
+   *
+   * 保存文档阅读记录
+   * @param {string} doc
+   * @param {number} position
+   * @memberof DocService
+   */
+  public setDocReadRecrod(doc: string, position: number) {
+    const readingRecords = this.getReadingRecords()
+    readingRecords.set(doc, position)
+    this.setLastReadRecord(doc)
+    localStorage.setItem('doc-service::read-record', JSON.stringify([...readingRecords]))
+  }
+
+  public setLastReadRecord(doc: string) {
+    localStorage.setItem("doc-service:last-read", doc)
+  }
+
+  public getLastReadRecord(): string {
+    return localStorage.getItem("doc-service:last-read") || ''
+  }
+
+
+  /**
+   *
+   * 获取文档阅读记录
+   * @param {string} doc
+   * @return {*}  {number}
+   * @memberof DocService
+   */
+  public getDocReadRecord(doc: string) :number{
+    const readingRecords = this.getReadingRecords()
+    return readingRecords.get(doc) || 0
+  }
+
+  private getReadingRecords(): Map<string, number>{
+    let rawData = localStorage.getItem('doc-service::read-record')
+    let readingRecords : Map<string, number>
+    if (!rawData) {
+      readingRecords = new Map()
+    }else{
+      readingRecords = new Map(JSON.parse(rawData))
+    }
+    return readingRecords
+  }
+
+
   private hightlightCode(code: string, lang: string | undefined): string {
     if (!lang) {
       lang = 'clike'

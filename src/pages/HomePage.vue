@@ -3,8 +3,8 @@
     <div class="banner">
       <div>This is {{ name }} homepage</div>
       <p>For instead gitbook</p>
-      <el-button type="primary" round size="medium">开始</el-button>
-      <el-button type="success" round size="medium">了解更多</el-button>
+      <el-button type="primary" round size="medium" @click="$router.push('/doc/README')">开始</el-button>
+      <el-button type="success" round size="medium" @click="handleContinueRead">继续阅读</el-button>
     </div>
   </div>
 </template>
@@ -12,6 +12,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import api from '../api'
+import docService from '@/service/DocService'
 
 export default defineComponent({
   setup() {
@@ -20,6 +21,16 @@ export default defineComponent({
   data() {
     return {
       name: "my-book"
+    }
+  },
+  methods:{
+    handleContinueRead(){
+      const doc = docService.getLastReadRecord()
+      if (doc) {
+        this.$router.push("/doc/" + doc)
+      }else {
+        this.$router.push("/doc/README")
+      }
     }
   }
 })
