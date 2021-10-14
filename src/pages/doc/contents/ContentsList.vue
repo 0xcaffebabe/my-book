@@ -19,7 +19,7 @@ function registerWindowScrollListener(){
       for (let i = 0; i < idList.length; i++) {
         const elm = idList[i];
         if (elm instanceof HTMLElement) {
-          if (window.scrollY > elm.offsetTop - 80){
+          if (window.scrollY > elm.offsetTop - 160){
             node = elm;
           }
         }
@@ -30,13 +30,10 @@ function registerWindowScrollListener(){
       }
       if (node != null) {
         const previousNode = document.querySelector(".toc .active");
-        if (previousNode != null) {
+        if (previousNode !== null) {
           previousNode.classList.remove("active");
         }
-        console.log(node)
-        document
-          .querySelector(`.toc a[href='#${node.id}']`)!
-          .classList.add("active");
+        document.querySelector(`.toc a[href='#${node.id}']`)?.classList.add("active");
       }
     });
 }
@@ -56,17 +53,20 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .toc{
+  max-width: 300px;
 	overflow-y:auto;
 	border-left: 1px solid #ccc;
   overflow-y:hidden;
+  max-height: calc(100% - 100px);
 }
 .toc:hover {
   overflow-y:auto;
+  max-width: 306px;
 }
 .toc :deep(a){
     color: rgb(116, 129, 141);
     text-decoration: none;
-    font-weight: 550;
+    font-weight: 400;
     font-size: 14px;
     text-decoration: none;
 }
@@ -80,8 +80,8 @@ ul, :deep(ul) {
   padding: 0 24px;
   list-style:none;
 }
-li {
-  padding: 8px 0;
+:deep(li) {
+  padding: 4px 0;
 }
 :deep(li a:hover:before) {
   position:absolute;

@@ -105,10 +105,11 @@ export default defineComponent({
   .toc-wrapper {
     position: fixed;
     top: 80px;
-    right: 40px;
+    right: 16px;
+    height: calc(100% - 60px);
   }
   .markdown-section {
-    max-width: 80%;
+    max-width: 72%;
     :deep(.img-wrapper img) {
       max-width: 60%;
     }
