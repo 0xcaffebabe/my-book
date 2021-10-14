@@ -2,6 +2,9 @@ import api from '@/api'
 import marked from 'marked'
 import prism from 'prismjs'
 import Content from '@/dto/Content'
+import Cacheable from '@/decorator/Cacheable'
+import Cache from '@/decorator/Cache'
+const cache = Cache()
 
 const LANGUAGE_MAP = {
   'c': 'clike',
@@ -20,14 +23,30 @@ const LANGUAGE_MAP = {
   'ruby': 'clike',
 } as Record<string, string>
 
-class DocService {
+class DocService implements Cacheable{
 
-  static renderMd(mdContent: string) : string {
+  private static instance: DocService
+
+  private constructor(){}
+
+  name(): string {
+    return 'doc-service'
+  }
+
+  public static getInstance(): DocService {
+    if (!this.instance) {
+      this.instance = new DocService()
+    }
+    return this.instance
+  }
+
+  @cache
+  public renderMd(mdContent: string) : string {
     const render = new marked.Renderer()
     // 自定义url渲染
-    render.link = function(href: string | null, title: string | null, text: string | null) : string{
+    render.link = (href: string | null, title: string | null, text: string | null) : string => {
       if (!href?.startsWith('http')) {
-        return `<a href='/doc/${DocService.docUrl2Id(href!)}'>${text}</a>`
+        return `<a href='/doc/${this.docUrl2Id(href!)}'>${text}</a>`
       }else {
         return `<a href='${href}' target="_blank">${text}</a>`
       }
@@ -41,7 +60,7 @@ class DocService {
     })
   }
 
-  static hightlightCode(code: string, lang: string | undefined): string {
+  private hightlightCode(code: string, lang: string | undefined): string {
     if (!lang) {
       lang = 'clike'
     }else {
@@ -54,7 +73,7 @@ class DocService {
     return prism.highlight(code, prism.languages[lang], lang)
   }
 
-  public static docUrl2Id(url :string): string {
+  public docUrl2Id(url :string): string {
     if (!url) {
       return ""
     }
@@ -71,7 +90,8 @@ class DocService {
    * @return {*}  {Promise<Content[]>}
    * @memberof DocService
    */
-  static getContent(docHtml: string): Content[] {
+  @cache
+  public getContent(docHtml: string): Content[] {
     const elm = new DOMParser().parseFromString(docHtml, 'text/html')
     const allHead = elm.querySelectorAll('h1, h2, h3, h4, h5, h6')
     // 用来存储最近的Hx节点
@@ -105,4 +125,4 @@ class DocService {
   }
 }
 
-export default DocService
+export default DocService.getInstance()
