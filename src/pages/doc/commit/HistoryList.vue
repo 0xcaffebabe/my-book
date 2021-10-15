@@ -25,7 +25,10 @@ import config from '@/config'
 
 export default defineComponent({
   props: {
-    file: DocFileInfo
+    file: {
+      type: DocFileInfo,
+      required: true
+    }
   },
   setup() {
     
