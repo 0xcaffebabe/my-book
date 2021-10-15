@@ -51,7 +51,7 @@ import categoryService from "@/service/CategoryService";
 import docService from "@/service/DocService";
 import CategoryList from "./category/CategoryList.vue";
 import ContentsList from "./contents/ContentsList.vue";
-import HistoryList from "./history/HistoryList.vue";
+import HistoryList from "./commit/HistoryList.vue";
 import api from "@/api";
 import DocFileInfo from "@/dto/DocFileInfo";
 import DocService from "@/service/DocService";
