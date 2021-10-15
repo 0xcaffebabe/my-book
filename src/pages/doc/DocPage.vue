@@ -144,6 +144,7 @@ export default defineComponent({
     registerScrollListener() {
       let timer: NodeJS.Timeout;
       document.addEventListener("scroll", (e) => {
+        // 限流更新阅读位置
         timer = setTimeout(() => {
           clearTimeout(timer);
           docService.setDocReadRecrod(this.doc, window.scrollY);
