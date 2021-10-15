@@ -8,10 +8,12 @@ import './code-hl-vsc.css'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import axios from 'axios'
+import createStore from '@/store'
 
 const app = createApp(App)
 
 app.use(ElementPlus)
+app.use(createStore())
 const router = createRouter()
 
 // 屏幕顶端进度条开始

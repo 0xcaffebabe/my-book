@@ -9,7 +9,7 @@
     content="this is content, this is content, this is content"
   >
     <template #reference>
-      <el-menu-item :index="convert(value.link)">
+      <el-menu-item :index="convert(value.link)" @click="handleMenuItemClick(value)">
         <template #title>
           <span>{{ value.name }}</span>
         </template>
@@ -64,6 +64,9 @@ export default defineComponent({
     },
     handlePopoverHide() {
       this.loading = true;
+    },
+    handleMenuItemClick(value: Category) {
+      this.$store.commit('setCurrentCategory', value)
     },
     calcLastUpdate() {
       if (!this.file) {

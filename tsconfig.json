@@ -11,7 +11,10 @@
     "esModuleInterop": true,
     "lib": [
       "esnext",
-      "dom"
+      "dom",
+      "es5",
+      "es6",
+      "dom.iterable"
     ],
     "experimentalDecorators": true,
     "baseUrl": ".",
@@ -24,6 +27,7 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
+    "src/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue"
   ]
