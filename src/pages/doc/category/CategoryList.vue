@@ -1,5 +1,5 @@
 <template>
-  <el-menu unique-opened  @open="handleOpen" @select="handleSelect" :default-active="doc" :router="true">
+  <el-menu unique-opened  @open="handleOpen" :default-active="doc" :router="true">
     <CategoryTree :menuList="cateList"/>
   </el-menu>
 </template>
@@ -34,10 +34,14 @@ export default defineComponent({
   methods: {
     handleOpen(index: string) {
       if (index) {
-        this.showDoc(index.substring(0, index.length - 1))
+        console.log(index)
+        // 由于带有孩子目录的父级目录的index后缀带了一个p 所有这里要去掉
+        const doc = index.substring(0, index.length - 1)
+        this.showDoc(doc)
       }
     },
     showDoc(index: string) {
+      this.updateCurrentCategory(index)
       this.$router.push('/doc/' + index)
     },
     findCategoryById(doc: string){
@@ -51,16 +55,19 @@ export default defineComponent({
         cateList.push(...cate!.chidren)
       }
       return null
+    },
+    updateCurrentCategory(doc: string){
+      const currentCate = this.findCategoryById(doc)
+      if (!currentCate) {
+        console.warn(`${this.doc} 无法找寻到相关目录!`)
+      }else {
+        this.$store.state.currentCategory = currentCate
+      }
     }
   },
   async created(){
     this.cateList = await categoryService.getCategoryList()
-    const currentCate = this.findCategoryById(this.doc!)
-    if (!currentCate) {
-      console.warn(`${this.doc} 无法找寻到相关目录!`)
-    }else {
-      this.$store.state.currentCategory = currentCate
-    }
+    this.updateCurrentCategory(this.doc!)
   },
 })
 </script>

@@ -3,7 +3,7 @@
     <el-aside width="200px">
       <div class="category-wrapper">
         <keep-alive>
-          <category-list ref="categoryList" :doc="doc" @change="handleCategoryChange" />
+          <category-list ref="categoryList" :doc="doc"/>
         </keep-alive>
       </div>
     </el-aside>
@@ -17,7 +17,7 @@
       >
         <template #default>
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: chain.link }" v-for="chain in categoryChainList" :key="chain.name">{{chain.name}}</el-breadcrumb-item
+            <el-breadcrumb-item :to="{ path: '/doc/' + docUrl2Id(chain.link) }" v-for="chain in categoryChainList" :key="chain.name">{{chain.name}}</el-breadcrumb-item
             >
           </el-breadcrumb>
           <div class="markdown-section" v-html="contentHtml"></div>
@@ -59,29 +59,26 @@ export default defineComponent({
       contentsList: [] as Content[],
       doc: "" as string,
       loading: true as boolean,
-      categoryChainList: [
-        {
-          'name': 'a',
-          'link': 'a',
-        },
-        {
-          'name': 'a',
-          'link': 'a',
-        },
-        {
-          'name': 'a',
-          'link': 'a',
-        },
-      ] as Category[],
-      currentCategory: new Category() as Category
     };
   },
   computed: {
     contentHtml(): string {
       return DocService.renderMd(this.file.content);
     },
+    currentCategory(): Category {
+      return this.$store.state.currentCategory
+    },
+    categoryChainList(): Category[]{
+      if (!this.currentCategory) {
+        return []
+      }
+      return this.getCategoryChain(this.currentCategory)
+    }
   },
   methods: {
+    docUrl2Id(url: string){
+      return docService.docUrl2Id(url)
+    },
     getCategoryChain(value: Category){
       const chainList : Category[] = [value]
       while(value.parent) {
@@ -89,9 +86,6 @@ export default defineComponent({
         value = value.parent
       }
       return chainList.reverse()
-    },
-    handleCategoryChange(value: Category){
-      this.currentCategory = value
     },
     async showDoc(doc: string) {
       docService.setDocReadRecrod(doc, window.scrollY);
@@ -135,7 +129,10 @@ export default defineComponent({
     },
   },
   beforeRouteUpdate(to, from) {
-    this.showDoc(to.params.doc.toString());
+    const doc = to.params.doc.toString()
+    this.showDoc(doc);
+    const categoryListRef: any = this.$refs.categoryList
+    categoryListRef.updateCurrentCategory(doc)
   },
   async created() {
     this.registerScrollListener();
