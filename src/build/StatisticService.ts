@@ -2,6 +2,7 @@ import { StatisticInfo, CommitStatistic, WordStatistic, CodeFrequencyItem } from
 import BaseService from "./BaseService";
 import GitService from "./GitService";
 import fs, { stat } from 'fs'
+import { cleanText } from "@/util/StringUtils";
 
 const imageSuffix = ['png', 'jpg', 'svg', 'jpeg', 'jiff', 'bmp']
 
@@ -58,7 +59,7 @@ class StatisticService extends BaseService {
     }
     const totalWords = (await Promise.all(taskList))
       .map(v => v.toString())
-      .map(this.cleanText)
+      .map(cleanText)
       .map(v => v.length)
       .reduce((a, b) => a + b, 0)
     return {
@@ -109,14 +110,6 @@ class StatisticService extends BaseService {
                   })
   }
 
-  static cleanText(text: string): string {
-    text = text.replace(/[’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~]/g, '')
-    text = text.replace(/\n/g, '')
-    text = text.replace(/\t/g, '')
-    text = text.replace(/\s/g, '')
-    text = text.replace(/[\u0060|\u0021-\u002c|\u002e-\u002f|\u003a-\u003f|\u2200-\u22ff|\uFB00-\uFFFD|\u2E80-\u33FF]/g, '')
-    return text
-  }
 }
 
 export default StatisticService

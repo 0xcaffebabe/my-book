@@ -16,16 +16,11 @@
       </el-menu-item>
     </template>
     <div>
-      <el-skeleton :rows="0" animated :loading="loading" :throttle="500">
+      <el-skeleton :rows="1" animated :loading="loading" :throttle="500">
         <template #default>
-          <el-badge
-            :value="lastPastDays + '天前更新'"
-            class="item"
-            type="warning"
-            style="margin-left: 8px"
-          >
-            <span>{{ value.name }}</span>
-          </el-badge>
+          <p>{{ value.name }}</p>
+          <el-badge :value="lastPastDays + '天前更新'" class="item" type="warning"></el-badge>
+          <el-badge :value="wordCount + '字'" class="item" type="primary"></el-badge>
         </template>
       </el-skeleton>
     </div>
@@ -38,6 +33,7 @@ import { defineComponent } from "vue";
 import categoryService from "@/service/CategoryService";
 import api from "@/api";
 import DocFileInfo from "@/dto/DocFileInfo";
+import { cleanText } from "@/util/StringUtils";
 
 export default defineComponent({
   props: {
@@ -51,7 +47,12 @@ export default defineComponent({
       lastPastDays: 0 as number,
     };
   },
-  setup() {},
+  computed: {
+    wordCount() {
+      return cleanText(this.file?.content).length
+    }
+  },
+  setup() { },
   methods: {
     // 将doc链接转为 x-x-x 形式的id
     convert(link: string): string {
