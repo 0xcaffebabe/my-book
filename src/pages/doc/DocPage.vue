@@ -61,6 +61,7 @@ import api from "@/api";
 import DocFileInfo from "@/dto/DocFileInfo";
 import DocService from "@/service/DocService";
 import { ElMessage } from 'element-plus'
+import './markdown.css'
 
 export default defineComponent({
   components: {
