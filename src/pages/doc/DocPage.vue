@@ -54,6 +54,7 @@ import HistoryList from "./history/HistoryList.vue";
 import api from "@/api";
 import DocFileInfo from "@/dto/DocFileInfo";
 import DocService from "@/service/DocService";
+import { ElMessage } from 'element-plus'
 
 export default defineComponent({
   components: {
@@ -100,7 +101,11 @@ export default defineComponent({
       docService.setDocReadRecrod(doc, window.scrollY);
       this.loading = true;
       this.doc = doc;
-      this.file = await api.getDocFileInfo(doc);
+      try {
+        this.file = await api.getDocFileInfo(doc);
+      }catch(err){
+        ElMessage.error(err.message)
+      }
       this.generateTOC();
       this.$nextTick(() => {
         this.registerLinkRouter();

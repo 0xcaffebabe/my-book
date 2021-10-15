@@ -21,6 +21,9 @@ class Api implements Cacheable{
     }
     name = "/" + name.replace(/-/g, '/') + ".md.json"
     const data = await axios.get(name)
+    if (!data.data) {
+      throw Error('无法获取文档 ' + name)
+    }
     return data.data
   }
 
