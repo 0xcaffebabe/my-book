@@ -26,7 +26,7 @@
           </el-breadcrumb>
           <div class="markdown-section" v-html="contentHtml"></div>
           <div style="text-align: center">
-            <el-divider />
+            <el-divider style="width:72%" />
             <div class="footer-wrapper">
               <history-list :file="file" />
             </div>

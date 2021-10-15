@@ -7,7 +7,9 @@
         :key="index"
         :timestamp="commit.date"
       >
-        <p class="history-message">{{ commit.message }}</p>
+        <p class="history-message">
+          <a :href="config.repositoryUrl + '/commit/' +commit.hash" target="_blank">{{ commit.message }}</a>
+        </p>
       </el-timeline-item>
       <el-timeline-item v-if="file.hasMoreCommit">
         <p class="history-message"><a href="#">全部历史({{file.totalCommits}}条)</a></p>
@@ -19,6 +21,7 @@
 <script lang="ts">
 import DocFileInfo from '@/dto/DocFileInfo'
 import { defineComponent } from 'vue'
+import config from '@/config'
 
 export default defineComponent({
   props: {
@@ -29,7 +32,7 @@ export default defineComponent({
   },
   data() {
     return {
-      
+      config
     }
   }
 })
@@ -40,5 +43,14 @@ export default defineComponent({
   text-align:left;
   padding:0;
   margin: 0;
+  a {
+    text-decoration: none;
+    color: #74818d;
+    font-weight: 400;
+    font-size: 14px;
+  }
+  a:hover {
+    color: #3E90E8 !important;
+  }
 }
 </style>
