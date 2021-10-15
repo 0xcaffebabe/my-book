@@ -3,7 +3,7 @@
     <el-aside width="200px">
       <div class="category-wrapper">
         <keep-alive>
-          <category-list ref="categoryList" :doc="doc"/>
+          <category-list ref="categoryList" :doc="doc" />
         </keep-alive>
       </div>
     </el-aside>
@@ -17,10 +17,20 @@
       >
         <template #default>
           <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: '/doc/' + docUrl2Id(chain.link) }" v-for="chain in categoryChainList" :key="chain.name">{{chain.name}}</el-breadcrumb-item
+            <el-breadcrumb-item
+              :to="{ path: '/doc/' + docUrl2Id(chain.link) }"
+              v-for="chain in categoryChainList"
+              :key="chain.name"
+              >{{ chain.name }}</el-breadcrumb-item
             >
           </el-breadcrumb>
           <div class="markdown-section" v-html="contentHtml"></div>
+          <div style="text-align: center">
+            <el-divider />
+            <div class="footer-wrapper">
+              <history-list />
+            </div>
+          </div>
         </template>
       </el-skeleton>
       <div class="toc-wrapper">
@@ -28,9 +38,6 @@
           <contents-list :contentsList="contentsList" />
         </keep-alive>
       </div>
-      <el-footer style="text-align: center">
-        <el-divider />
-      </el-footer>
     </el-main>
   </el-container>
 </template>
@@ -43,6 +50,7 @@ import categoryService from "@/service/CategoryService";
 import docService from "@/service/DocService";
 import CategoryList from "./category/CategoryList.vue";
 import ContentsList from "./contents/ContentsList.vue";
+import HistoryList from "./history/HistoryList.vue";
 import api from "@/api";
 import DocFileInfo from "@/dto/DocFileInfo";
 import DocService from "@/service/DocService";
@@ -51,6 +59,7 @@ export default defineComponent({
   components: {
     CategoryList,
     ContentsList,
+    HistoryList,
   },
   data() {
     return {
@@ -66,26 +75,26 @@ export default defineComponent({
       return DocService.renderMd(this.file.content);
     },
     currentCategory(): Category {
-      return this.$store.state.currentCategory
+      return this.$store.state.currentCategory;
     },
-    categoryChainList(): Category[]{
+    categoryChainList(): Category[] {
       if (!this.currentCategory) {
-        return []
+        return [];
       }
-      return this.getCategoryChain(this.currentCategory)
-    }
+      return this.getCategoryChain(this.currentCategory);
+    },
   },
   methods: {
-    docUrl2Id(url: string){
-      return docService.docUrl2Id(url)
+    docUrl2Id(url: string) {
+      return docService.docUrl2Id(url);
     },
-    getCategoryChain(value: Category){
-      const chainList : Category[] = [value]
-      while(value.parent) {
-        chainList.push(value.parent)
-        value = value.parent
+    getCategoryChain(value: Category) {
+      const chainList: Category[] = [value];
+      while (value.parent) {
+        chainList.push(value.parent);
+        value = value.parent;
       }
-      return chainList.reverse()
+      return chainList.reverse();
     },
     async showDoc(doc: string) {
       docService.setDocReadRecrod(doc, window.scrollY);
@@ -129,10 +138,10 @@ export default defineComponent({
     },
   },
   beforeRouteUpdate(to, from) {
-    const doc = to.params.doc.toString()
+    const doc = to.params.doc.toString();
     this.showDoc(doc);
-    const categoryListRef: any = this.$refs.categoryList
-    categoryListRef.updateCurrentCategory(doc)
+    const categoryListRef: any = this.$refs.categoryList;
+    categoryListRef.updateCurrentCategory(doc);
   },
   async created() {
     this.registerScrollListener();
@@ -151,7 +160,8 @@ export default defineComponent({
 }
 .main {
   padding-left: 14em;
-  padding-bottom: 0;
+  padding-bottom: 20px;
+  // overflow-y: hidden;
 }
 .toc-wrapper {
   position: fixed;
@@ -188,5 +198,9 @@ export default defineComponent({
     padding: 1.25rem 1.5rem;
     font-size: 16px;
   }
+}
+.footer-wrapper {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
