@@ -38,9 +38,13 @@
           <contents-list :contentsList="contentsList" />
         </keep-alive>
       </div>
+      <div style="position:fixed;right:160px;top:60px">
+        <el-button @click="$refs.readingHistory.show()" type="primary" size="mini">阅读历史</el-button>
+      </div>
     </el-main>
   </el-container>
   <el-backtop :bottom="40" :right="366" />
+  <reading-history ref="readingHistory"/>
 </template>
 
 <script lang="ts">
@@ -52,6 +56,7 @@ import docService from "@/service/DocService";
 import CategoryList from "./category/CategoryList.vue";
 import ContentsList from "./contents/ContentsList.vue";
 import HistoryList from "./commit/HistoryList.vue";
+import ReadingHistory from "./history/ReadingHistory.vue"
 import api from "@/api";
 import DocFileInfo from "@/dto/DocFileInfo";
 import DocService from "@/service/DocService";
@@ -62,6 +67,7 @@ export default defineComponent({
     CategoryList,
     ContentsList,
     HistoryList,
+    ReadingHistory
   },
   data() {
     return {
