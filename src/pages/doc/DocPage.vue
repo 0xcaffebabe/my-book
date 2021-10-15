@@ -40,6 +40,7 @@
       </div>
     </el-main>
   </el-container>
+  <el-backtop :bottom="40" :right="366" />
 </template>
 
 <script lang="ts">
