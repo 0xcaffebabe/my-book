@@ -4,7 +4,7 @@
       <div class="container">
         <div class="logo">
           <a href="#" @click="$router.push('/')">
-            {{ name }}
+            {{ siteName }}
           </a>
         </div>
         <div class="content">
@@ -17,22 +17,14 @@
               round
             ></el-button>
           </div>
-          <el-menu class="el-menu-demo" mode="horizontal">
-            <el-menu-item index="1">Processing Center</el-menu-item>
-            <el-sub-menu index="2">
-              <template #title>Workspace</template>
-              <el-menu-item index="2-1">item one</el-menu-item>
-              <el-menu-item index="2-2">item two</el-menu-item>
-              <el-menu-item index="2-3">item three</el-menu-item>
-              <el-sub-menu index="2-4">
-                <template #title>item four</template>
-                <el-menu-item index="2-4-1">item one</el-menu-item>
-                <el-menu-item index="2-4-2">item two</el-menu-item>
-                <el-menu-item index="2-4-3">item three</el-menu-item>
+          <el-menu mode="horizontal" :router="true">
+            <template v-for="(menu, index) in navMenu" :key="index">
+              <el-sub-menu :index="menu.router" v-if="menu.children">
+                <template #title>{{menu.title}}</template>
+                <el-menu-item :index="index + '-' + subIndex" v-for="(subMenu, subIndex) in menu.children" :key="index + '-' + subIndex">{{subMenu.title}}</el-menu-item>
               </el-sub-menu>
-            </el-sub-menu>
-            <el-menu-item index="3" disabled>Info</el-menu-item>
-            <el-menu-item index="4">Orders</el-menu-item>
+              <el-menu-item v-else :index="index + ''">{{menu.title}}</el-menu-item>
+            </template> 
           </el-menu>
         </div>
       </div>
@@ -42,6 +34,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import config from '@/config'
 
 export default defineComponent({
   setup() {},
@@ -49,6 +42,14 @@ export default defineComponent({
     return {
       name: "my-book" as string,
     };
+  },
+  computed: {
+    siteName(){
+      return config.siteName
+    },
+    navMenu(){
+      return config.navMenu
+    }
   },
   created() {},
 });
