@@ -28,7 +28,7 @@
           <div style="text-align: center">
             <el-divider />
             <div class="footer-wrapper">
-              <history-list />
+              <history-list :file="file" />
             </div>
           </div>
         </template>

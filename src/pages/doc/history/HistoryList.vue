@@ -1,46 +1,44 @@
 <template>
   <div class="block">
-    <p>更新历史</p>
+    <p style="text-align:left">更新历史</p>
     <el-timeline>
       <el-timeline-item
-        v-for="(activity, index) in activities"
+        v-for="(commit, index) in file.commitList"
         :key="index"
-        :timestamp="activity.timestamp"
+        :timestamp="commit.date"
       >
-        {{ activity.content }}
+        <p class="history-message">{{ commit.message }}</p>
+      </el-timeline-item>
+      <el-timeline-item v-if="file.hasMoreCommit">
+        <p class="history-message"><a href="#">全部历史({{file.totalCommits}}条)</a></p>
       </el-timeline-item>
     </el-timeline>
   </div>
 </template>
 
 <script lang="ts">
+import DocFileInfo from '@/dto/DocFileInfo'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+  props: {
+    file: DocFileInfo
+  },
   setup() {
     
   },
   data() {
     return {
-      activities: [
-        {
-          content: 'Event start',
-          timestamp: '2018-04-15',
-        },
-        {
-          content: 'Approved',
-          timestamp: '2018-04-13',
-        },
-        {
-          content: 'Success',
-          timestamp: '2018-04-11',
-        },
-      ],
+      
     }
   }
 })
 </script>
 
 <style lang="less" scoped>
-
+.history-message {
+  text-align:left;
+  padding:0;
+  margin: 0;
+}
 </style>
