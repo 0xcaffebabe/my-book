@@ -71,6 +71,7 @@ import { ElMessage } from 'element-plus'
 import { ArrowLeftBold, ArrowRightBold } from "@element-plus/icons";
 import './markdown.css'
 
+let timer: NodeJS.Timeout;
 export default defineComponent({
   components: {
     CategoryList,
@@ -174,6 +175,10 @@ export default defineComponent({
     this.showDoc(this.$route.params.doc.toString());
     this.cateList = await categoryService.getCategoryList();
   },
+  unmounted(){
+    // 一些清理操作
+    document.onscroll = null
+  }
 });
 </script>
 

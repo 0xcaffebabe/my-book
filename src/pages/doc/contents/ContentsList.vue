@@ -8,10 +8,7 @@
 import { defineComponent } from "vue";
 import ContentsTree from "./ContentsTree.vue";
 
-registerWindowScrollListener()
-
 function registerWindowScrollListener() {
-  console.log('register content scroll listener')
   document.addEventListener("scroll", (e) => {
     const idList = document.querySelectorAll(
       ".markdown-section h1, .markdown-section h2, .markdown-section h3, .markdown-section h4 .markdown-section h5, .markdown-section h6"
@@ -64,6 +61,12 @@ export default defineComponent({
   components: {
     ContentsTree,
   },
+  created(){
+    registerWindowScrollListener()
+  },
+  unmounted(){
+    document.onscroll = null
+  }
 });
 </script>
 
