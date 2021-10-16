@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="200px">
+    <el-aside width="280px">
       <div class="category-wrapper">
         <keep-alive>
           <category-list ref="categoryList" :doc="doc" />
@@ -167,6 +167,10 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+.el-container {
+  display: flex;
+  justify-content: space-between;
+}
 .category-wrapper {
   position: fixed;
   overflow-y: scroll;
@@ -174,9 +178,8 @@ export default defineComponent({
   width: 280px;
 }
 .main {
-  padding-left: 14em;
+  padding-left: 8em;
   padding-bottom: 20px;
-  // overflow-y: hidden;
 }
 .toc-wrapper {
   position: fixed;
