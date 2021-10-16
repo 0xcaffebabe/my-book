@@ -12,7 +12,7 @@
         :rows="25"
         animated
         :loading="loading"
-        :throttle="1000"
+        :throttle="50"
         style="max-width: 80%"
       >
         <template #default>

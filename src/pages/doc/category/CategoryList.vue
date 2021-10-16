@@ -1,7 +1,11 @@
 <template>
-  <el-menu unique-opened  @open="handleOpen" :default-active="doc" :router="true">
-    <CategoryTree :menuList="cateList"/>
-  </el-menu>
+  <el-skeleton :rows="24" animated :loading="loading" :throttle="50" style="max-width: 80%; padding:20px">
+    <template #default>
+      <el-menu unique-opened @open="handleOpen" :default-active="doc" :router="true">
+        <CategoryTree :menuList="cateList" />
+      </el-menu>
+    </template>
+  </el-skeleton>
 </template>
 
 <script lang="ts">
@@ -23,13 +27,14 @@ export default defineComponent({
     CategoryTree
   },
   setup() {
-    
+
   },
   data() {
     return {
-      cateList: [],
-      activeMenu: ''
-    } as Data
+      cateList: [] as Category[],
+      activeMenu: '' as string,
+      loading: true as boolean
+    }
   },
   methods: {
     handleOpen(index: string) {
@@ -44,10 +49,10 @@ export default defineComponent({
       this.updateCurrentCategory(index)
       this.$router.push('/doc/' + index)
     },
-    findCategoryById(doc: string){
+    findCategoryById(doc: string) {
       const arr = doc.split('-')
       const cateList = [...this.cateList]
-      while(cateList.length > 0) {
+      while (cateList.length > 0) {
         const cate = cateList.pop()
         if (docService.docUrl2Id(cate!.link) == doc) {
           return cate
@@ -56,22 +61,26 @@ export default defineComponent({
       }
       return null
     },
-    updateCurrentCategory(doc: string){
+    updateCurrentCategory(doc: string) {
       const currentCate = this.findCategoryById(doc)
       if (!currentCate) {
         console.warn(`${this.doc} 无法找寻到相关目录!`)
-      }else {
+      } else {
         this.$store.state.currentCategory = currentCate
       }
     }
   },
-  async created(){
+  async created() {
+    this.loading = true
     this.cateList = await categoryService.getCategoryList()
     this.updateCurrentCategory(this.doc!)
+    this.$nextTick(() => {
+      this.loading = false
+    })
+    this.loading = false
   },
 })
 </script>
 
 <style lang="less" scoped>
-
 </style>
