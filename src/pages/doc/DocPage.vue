@@ -1,28 +1,35 @@
 <template>
   <el-container>
-    <el-aside width="280px">
+    <el-aside width="280px" v-show="showAside">
       <div class="category-wrapper">
         <keep-alive>
           <category-list ref="categoryList" :doc="doc" />
         </keep-alive>
       </div>
     </el-aside>
-    <el-main class="main">
-      <el-skeleton
-        :rows="25"
-        animated
-        :loading="loading"
-        :throttle="50"
-        style="max-width: 80%"
+    <el-affix :offset="384">
+      <el-button
+        class="cate-fix-btn"
+        type="default"
+        size="mini"
+        @click="showAside = !showAside"
+        :class="{ 'active': showAside }"
       >
+        <el-icon>
+          <arrow-left-bold v-if="showAside" />
+          <arrow-right-bold v-else />
+        </el-icon>
+      </el-button>
+    </el-affix>
+    <el-main class="main">
+      <el-skeleton :rows="25" animated :loading="loading" :throttle="50" style="max-width: 80%">
         <template #default>
           <el-breadcrumb separator="/">
             <el-breadcrumb-item
               :to="{ path: '/doc/' + docUrl2Id(chain.link) }"
               v-for="chain in categoryChainList"
               :key="chain.name"
-              >{{ chain.name }}</el-breadcrumb-item
-            >
+            >{{ chain.name }}</el-breadcrumb-item>
           </el-breadcrumb>
           <div class="markdown-section" v-html="contentHtml"></div>
           <div style="text-align: center">
@@ -44,7 +51,7 @@
     </el-main>
   </el-container>
   <el-backtop :bottom="40" :right="366" />
-  <reading-history ref="readingHistory"/>
+  <reading-history ref="readingHistory" />
 </template>
 
 <script lang="ts">
@@ -61,6 +68,7 @@ import api from "@/api";
 import DocFileInfo from "@/dto/DocFileInfo";
 import DocService from "@/service/DocService";
 import { ElMessage } from 'element-plus'
+import { ArrowLeftBold, ArrowRightBold } from "@element-plus/icons";
 import './markdown.css'
 
 export default defineComponent({
@@ -68,7 +76,9 @@ export default defineComponent({
     CategoryList,
     ContentsList,
     HistoryList,
-    ReadingHistory
+    ReadingHistory,
+    ArrowLeftBold,
+    ArrowRightBold
   },
   data() {
     return {
@@ -77,6 +87,7 @@ export default defineComponent({
       contentsList: [] as Content[],
       doc: "" as string,
       loading: true as boolean,
+      showAside: true as boolean
     };
   },
   computed: {
@@ -112,7 +123,7 @@ export default defineComponent({
       this.doc = doc;
       try {
         this.file = await api.getDocFileInfo(doc);
-      }catch(err){
+      } catch (err) {
         ElMessage.error(err.message)
       }
       this.generateTOC();
@@ -220,5 +231,12 @@ export default defineComponent({
 .footer-wrapper {
   display: flex;
   justify-content: space-between;
+}
+.cate-fix-btn {
+  padding: 7px 2px;
+  margin-left: 26px;
+}
+.el-affix .active {
+  margin-left: -26px;
 }
 </style>
