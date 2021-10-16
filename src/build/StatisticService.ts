@@ -2,7 +2,7 @@ import { StatisticInfo, CommitStatistic, WordStatistic, CodeFrequencyItem } from
 import BaseService from "./BaseService";
 import GitService from "./GitService";
 import fs, { stat } from 'fs'
-import { cleanText } from "@/util/StringUtils";
+import { cleanText } from "../util/StringUtils";
 
 const imageSuffix = ['png', 'jpg', 'svg', 'jpeg', 'jiff', 'bmp']
 
