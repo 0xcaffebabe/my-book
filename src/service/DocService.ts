@@ -4,6 +4,7 @@ import prism from 'prismjs'
 import Content from '@/dto/Content'
 import Cacheable from '@/decorator/Cacheable'
 import Cache from '@/decorator/Cache'
+import ReadHistoryItem from '@/dto/ReadHistoryItem'
 const cache = Cache()
 
 const LANGUAGE_MAP = {
@@ -79,10 +80,48 @@ class DocService implements Cacheable{
     localStorage.setItem('doc-service::read-record', JSON.stringify([...readingRecords]))
   }
 
+  /**
+   * 保存最后一次阅读的文档
+   *
+   * @param {string} doc
+   * @memberof DocService
+   */
   public setLastReadRecord(doc: string) {
     localStorage.setItem("doc-service:last-read", doc)
+    const rawData = localStorage.getItem('doc-service::read-history-list')
+    let readHistoryList :ReadHistoryItem[] = []
+    if (rawData) {
+      readHistoryList = JSON.parse(rawData)
+    }
+    const index = readHistoryList.findIndex(v => v.doc == doc)
+    if (index != -1) {
+      readHistoryList.splice(index, 1)
+    }
+    readHistoryList.push({
+      doc, time: new Date().toISOString()
+    })
+    if (readHistoryList.length > 20) {
+      readHistoryList.shift()
+    }
+    localStorage.setItem('doc-service::read-history-list', JSON.stringify(readHistoryList))
   }
 
+  public getReadHistoryList(): ReadHistoryItem[] {
+    const rawData = localStorage.getItem('doc-service::read-history-list')
+    let readHistoryList :ReadHistoryItem[] = []
+    if (rawData) {
+      readHistoryList = JSON.parse(rawData)
+    }
+    return readHistoryList.reverse()
+  }
+
+
+  /**
+   *
+   * 获取最后一次阅读的文档
+   * @return {*}  {string}
+   * @memberof DocService
+   */
   public getLastReadRecord(): string {
     return localStorage.getItem("doc-service:last-read") || ''
   }

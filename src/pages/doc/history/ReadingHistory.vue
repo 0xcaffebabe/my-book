@@ -3,11 +3,11 @@
     <div class="history-list">
       <el-timeline>
         <el-timeline-item
-          v-for="item in 20"
-          :key="item"
-          timestamp="2021-10-15 22:00:02"
+          v-for="item in readHistoryList"
+          :key="item.doc"
+          :timestamp="item.time"
         >
-          <a href="#">软件工程-软件设计-设计原则</a>
+          <a href="#" @click.prevent="$router.push('/doc/' + item.doc)">{{item.doc}}</a>
         </el-timeline-item>
       </el-timeline>
     </div>
@@ -15,6 +15,8 @@
 </template>
 
 <script lang="ts">
+import ReadHistoryItem from "@/dto/ReadHistoryItem";
+import DocService from "@/service/DocService";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -22,11 +24,13 @@ export default defineComponent({
   data() {
     return {
       showDrawer: false as boolean,
+      readHistoryList: [] as ReadHistoryItem[]
     };
   },
   methods: {
     show() {
       this.showDrawer = true;
+      this.readHistoryList = DocService.getReadHistoryList()
     },
     hide() {
       this.showDrawer = false;
