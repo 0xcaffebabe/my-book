@@ -52,7 +52,16 @@
         </template>
         {{ info.imageCount }}
       </el-descriptions-item>
-      <el-descriptions-item :span="1" v-for="item in 3" :key="item">
+      <el-descriptions-item>
+        <template #label>
+          <el-icon>
+          <clock />
+      </el-icon>
+          首次提交
+        </template>
+        {{ info.firstCommitDate }}
+      </el-descriptions-item>
+      <el-descriptions-item :span="1" v-for="item in 2" :key="item">
       </el-descriptions-item>
       <el-descriptions-item :span="12">
         <template #label>
@@ -70,7 +79,7 @@
 </template>
 
 <script lang="ts">
-import { Coin, Check, Document, Notebook, PictureFilled, Aim } from "@element-plus/icons";
+import { Coin, Check, Document, Notebook, PictureFilled, Aim, Clock } from "@element-plus/icons";
 import { defineComponent } from "vue";
 import api from "@/api";
 import { CodeFrequencyItem, StatisticInfo } from "@/dto/StatisticInfo";
@@ -82,7 +91,8 @@ export default defineComponent({
     Document,
     Notebook,
     PictureFilled,
-    Aim
+    Aim,
+    Clock
   },
   setup() {},
   data() {

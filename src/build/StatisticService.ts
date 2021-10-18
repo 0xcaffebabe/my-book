@@ -12,11 +12,12 @@ class StatisticService extends BaseService {
     const info = new StatisticInfo()
     info.generateTime = new Date().toISOString()
     const filelist = this.listAllFile('doc')
-    const result = await Promise.all([this.getRepositorySize(), this.getCommitStatistic(), this.getWordStatistic(), this.getCodeFrequency()])
+    const result = await Promise.all([this.getRepositorySize(), this.getCommitStatistic(), this.getWordStatistic(), this.getCodeFrequency(), this.getFirstCommitDate()])
     info.repositorySize = result[0]
     info.commit = result[1]
     info.word = result[2]
     info.codeFrequency = result[3]
+    info.firstCommitDate = result[4]
     info.chapterCount = filelist.filter(v => v.endsWith('.md') || v.endsWith('.MD')).length
     info.imageCount = filelist.filter(v => {
       for(let item of imageSuffix) {
@@ -66,6 +67,10 @@ class StatisticService extends BaseService {
       total: totalWords,
       wordPerDay: Math.ceil(totalWords / pastDays)
     }
+  }
+
+  private static async getFirstCommitDate(): Promise<string> {
+    return (await GitService.findFirstCommit()).date
   }
 
   private static async getCodeFrequency(): Promise<CodeFrequencyItem[]> {

@@ -53,4 +53,5 @@ export class StatisticInfo {
   // 图片数
   imageCount : number = 0
   codeFrequency: CodeFrequencyItem[] = []
+  firstCommitDate:string = '' 
 }
