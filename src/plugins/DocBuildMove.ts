@@ -28,8 +28,8 @@ export default function DocBuildMove(){
         console.log("doc-build-move 清空outDir")
         rimraf.sync(config.build.outDir + "/*")
         shell.mkdir(config.build.outDir)
-        // console.log("doc-build-move 移动doc目录")
-        // shell.cp("-R", "doc/*","./" + config.build.outDir)
+        console.log("doc-build-move 移动doc目录")
+        shell.cp("-R", "doc/*","./" + config.build.outDir)
         // 生成md文件对应的json
         for (let item of BaseService.listAllMdFile()) {
           DocService.getFileInfo(item)
