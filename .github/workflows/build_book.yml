@@ -3,8 +3,6 @@ name: buildbook
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build:
@@ -35,5 +33,6 @@ jobs:
         with:
           target_branch: gh-pages
           build_dir: dist
+          jekyll: false
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
