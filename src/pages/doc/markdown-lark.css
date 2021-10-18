@@ -42,7 +42,7 @@
 .markdown-section {
   line-height: 1.68;
   -webkit-text-size-adjust: 100%;
-  max-width: 860px;
+  max-width: 72%;
   /* margin: 0px auto; */
   padding: 1.6rem 3.2rem;
   font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Arial, Segoe UI, PingFang SC, Microsoft Yahei, Hiragino Sans GB, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
@@ -54,6 +54,15 @@
   /* inline */
   /* table */
   /* code block */
+}
+.markdown-section pre {
+  background-color: #282c34;
+  border-radius: 5px;
+  padding: 1.25rem 1.5rem;
+  font-size: 16px;
+}
+.markdown-section .img-wrapper img {
+  max-width: 60%;
 }
 .markdown-section * {
   -moz-box-sizing: border-box;
@@ -252,11 +261,12 @@
   border-radius: 4px;
   margin-left: 2px;
   margin-right: 2px;
-  border: 1px solid #dee0e3;
-  background-color: #f5f6f7;
   word-spacing: normal;
   line-height: 1.6;
   padding: 0 2px;
+}
+.markdown-section pre {
+  overflow-x: auto;
 }
 .markdown-section a {
   overflow-wrap: break-word;
@@ -277,50 +287,18 @@
   background-image: linear-gradient(90deg, #bbbfc4, #bbbfc4);
   background-repeat: no-repeat;
 }
-.markdown-section ul {
-  margin-left: 0;
-  padding-left: 22px;
-  list-style: none;
-}
-.markdown-section ul > li:not([class*=task-list-item]) {
-  word-wrap: break-all;
-  padding-left: 0px;
-}
-.markdown-section ul > li:not([class*=task-list-item]):before {
-  position: absolute;
-  top: 2px;
-  content: "•";
-  color: #3370ff;
-  display: inline-block;
-  margin-left: -20px;
-  margin-right: 20px;
-  width: 0px;
-  font-size: 0.8em;
-  transform: scale(1.25);
-  font-family: PingFangSC-Regular, PingFang SC;
-}
-.markdown-section ul > li:not([class*=task-list-item]) li:not([class*=task-list-item])::before {
-  content: "◦";
-  transform: scale(1);
-  font-weight: 700;
-}
-.markdown-section ul > li:not([class*=task-list-item]) li:not([class*=task-list-item]) li:not([class*=task-list-item])::before {
-  content: "▪";
-  transform: scale(1.25);
-  font-weight: normal;
-}
 .markdown-section ol {
   counter-reset: ol_counter;
   margin-left: 0;
   padding-left: 22px;
   list-style: none;
 }
-.markdown-section ol > li:not([class*=task-list-item]) {
+.markdown-section ol > li {
   word-wrap: break-all;
   padding-left: 0px;
   position: relative;
 }
-.markdown-section ol > li:not([class*=task-list-item]):before {
+.markdown-section ol > li:before {
   content: counter(ol_counter) ".";
   counter-increment: ol_counter;
   color: #3370ff;
@@ -339,58 +317,4 @@
 }
 .markdown-section li + li, .markdown-section ul ul, .markdown-section ol ul, .markdown-section ul ol, .markdown-section ol ol, .markdown-section li ul, .markdown-section li ol {
   margin-top: 4px;
-}
-.markdown-section .task-list-item {
-  padding-left: 0.3rem;
-}
-.markdown-section .task-list-item > p {
-  transition: color 0.3s, opacity 0.3s;
-}
-.markdown-section .task-list-item.task-list-done > p {
-  color: #646a73;
-  text-decoration: line-through;
-}
-.markdown-section .task-list-item.task-list-done > p > .md-emoji {
-  opacity: 0.5;
-}
-.markdown-section .task-list-item.task-list-done > p > .md-link > a {
-  opacity: 0.6;
-}
-.markdown-section .task-list-item > input {
-  -webkit-appearance: initial;
-  display: block;
-  position: absolute;
-  border: 1px solid #2b2f36;
-  border-radius: 0.25rem;
-  margin-left: -1.5rem;
-  height: 1.2rem;
-  width: 1.2rem;
-  transition: border-color 0.3s;
-}
-.markdown-section .task-list-item > input:focus {
-  outline: none;
-  box-shadow: none;
-}
-.markdown-section .task-list-item > input:hover {
-  border-color: #3370ff;
-}
-.markdown-section .task-list-item > input[checked]::before {
-  content: "";
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  height: 60%;
-  width: 2px;
-  transform: rotate(40deg);
-  background: #3370ff;
-}
-.markdown-section .task-list-item > input[checked]::after {
-  content: "";
-  position: absolute;
-  top: 46%;
-  left: 25%;
-  height: 30%;
-  width: 2px;
-  transform: rotate(-40deg);
-  background: #3370ff;
 }

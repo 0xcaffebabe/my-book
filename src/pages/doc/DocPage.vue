@@ -203,36 +203,6 @@ export default defineComponent({
   right: 16px;
   height: calc(100% - 60px);
 }
-.markdown-section {
-  max-width: 72%;
-  :deep(.img-wrapper img) {
-    max-width: 60%;
-  }
-  :deep(h1) {
-    font-size: 32px;
-  }
-  :deep(h2) {
-    font-size: 28px;
-  }
-  :deep(h3) {
-    font-size: 24px;
-  }
-  :deep(h4) {
-    font-size: 20px;
-  }
-  :deep(h5) {
-    font-size: 16px;
-  }
-  :deep(h6) {
-    font-size: 12px;
-  }
-  :deep(pre) {
-    background-color: #282c34;
-    border-radius: 5px;
-    padding: 1.25rem 1.5rem;
-    font-size: 16px;
-  }
-}
 .footer-wrapper {
   display: flex;
   justify-content: space-between;
