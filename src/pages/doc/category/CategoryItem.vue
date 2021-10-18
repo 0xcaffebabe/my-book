@@ -34,6 +34,7 @@ import categoryService from "@/service/CategoryService";
 import api from "@/api";
 import DocFileInfo from "@/dto/DocFileInfo";
 import { cleanText } from "@/util/StringUtils";
+import DocService from "@/service/DocService";
 
 export default defineComponent({
   props: {
@@ -56,7 +57,7 @@ export default defineComponent({
   methods: {
     // 将doc链接转为 x-x-x 形式的id
     convert(link: string): string {
-      return categoryService.docUrl2Id(link);
+      return DocService.docUrl2Id(link);
     },
     async handlePopoverShow() {
       this.file = await api.getDocFileInfo(this.convert(this.value!.link));

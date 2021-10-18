@@ -5,6 +5,7 @@ import Content from '@/dto/Content'
 import Cacheable from '@/decorator/Cacheable'
 import Cache from '@/decorator/Cache'
 import ReadHistoryItem from '@/dto/ReadHistoryItem'
+import DocUtils from '@/util/DocUtils'
 const cache = Cache()
 
 const LANGUAGE_MAP = {
@@ -165,11 +166,11 @@ class DocService implements Cacheable{
   }
 
   public docUrl2Id(url :string): string {
-    if (!url) {
-      return ""
-    }
-    url = decodeURI(url)
-    return url.split('/').splice(1).join('-').replace('.md', '')
+    return DocUtils.docUrl2Id(url)
+  }
+
+  public docId2Url(id: string): string {
+    return DocUtils.docId2Url(id)
   }
 
 

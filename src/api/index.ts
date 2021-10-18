@@ -3,6 +3,7 @@ import DocFileInfo from '@/dto/DocFileInfo'
 import Cache from '@/decorator/Cache'
 import Cacheable from '@/decorator/Cacheable'
 import { StatisticInfo } from '@/dto/StatisticInfo'
+import DocUtils from '@/util/DocUtils'
 
 const cache = Cache()
 
@@ -15,14 +16,14 @@ class Api implements Cacheable{
   private constructor(){}
 
   @cache
-  public async getDocFileInfo(name: string): Promise<DocFileInfo>{
-    if (!name) {
-      throw Error("doc文件名不得为空")
+  public async getDocFileInfo(id: string): Promise<DocFileInfo>{
+    if (!id) {
+      throw Error("doc id不得为空")
     }
-    name = "/" + name.replace(/-/g, '/') + ".md.json"
-    const data = await axios.get(name)
+    id = "/" + DocUtils.docId2Url(id) + ".json"
+    const data = await axios.get(id)
     if (!data.data) {
-      throw Error('无法获取文档 ' + name)
+      throw Error('无法获取文档 ' + id)
     }
     return data.data
   }

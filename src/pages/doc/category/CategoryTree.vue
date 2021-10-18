@@ -30,6 +30,7 @@ import { defineComponent } from "vue";
 import categoryService from "@/service/CategoryService";
 import Category from "@/dto/Category";
 import CategoryItem from './CategoryItem.vue'
+import DocService from "@/service/DocService";
 
 export default defineComponent({
   components: {
@@ -44,7 +45,7 @@ export default defineComponent({
     },
     // 将doc链接转为 x-x-x 形式的id
     convert(link: string): string {
-      return categoryService.docUrl2Id(link);
+      return DocService.docUrl2Id(link);
     },
     childrenSize(value: Category): number {
       if (value.chidren.length == 0) {
