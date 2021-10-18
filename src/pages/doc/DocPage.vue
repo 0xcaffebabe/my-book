@@ -7,7 +7,7 @@
         </keep-alive>
       </div>
     </el-aside>
-    <el-affix :offset="384">
+    <el-affix :offset="384" style="height:100px">
       <el-button
         class="cate-fix-btn"
         type="default"
@@ -69,7 +69,7 @@ import DocFileInfo from "@/dto/DocFileInfo";
 import DocService from "@/service/DocService";
 import { ElMessage } from 'element-plus'
 import { ArrowLeftBold, ArrowRightBold } from "@element-plus/icons";
-import './markdown.css'
+import './markdown-lark.css'
 
 let timer: NodeJS.Timeout;
 export default defineComponent({
