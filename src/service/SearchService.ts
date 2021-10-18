@@ -32,8 +32,9 @@ class SearchService {
     if (!body || body.indexOf(`<${hilighTag}>`) == -1) {
       return []
     }
-    return body.split('\n')
+    const res = body.split('\n')
                .filter(v => v.indexOf(`<${hilighTag}>`) != -1)
+    return Array.from(new Set(res))
   }
 }
 
