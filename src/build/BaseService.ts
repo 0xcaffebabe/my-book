@@ -25,8 +25,18 @@ export default class BaseService {
     return result
   }
 
-  static listFilesBySuffix(suffix: string): string[] {
-    return BaseService.listAllFile("./")
+
+  /**
+   *
+   * 列出某个路径下的某个后缀的文件
+   * @static
+   * @param {string} suffix
+   * @param {string} [path='./']
+   * @return {*}  {string[]}
+   * @memberof BaseService
+   */
+  static listFilesBySuffix(suffix: string, path: string = './'): string[] {
+    return BaseService.listAllFile(path)
                       .filter(v => v.endsWith('.' + suffix) || v.endsWith('.' + suffix.toUpperCase()))
   }
 
