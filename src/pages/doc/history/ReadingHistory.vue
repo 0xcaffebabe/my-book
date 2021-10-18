@@ -7,7 +7,7 @@
           :key="item.doc"
           :timestamp="item.time"
         >
-          <a href="#" @click.prevent="$router.push('/doc/' + item.doc)">{{item.doc}}</a>
+          <a href="#" @click.prevent="$router.push('/doc/' + item.doc)">{{docId2Url(item.doc)}}</a>
         </el-timeline-item>
       </el-timeline>
     </div>
@@ -17,6 +17,7 @@
 <script lang="ts">
 import ReadHistoryItem from "@/dto/ReadHistoryItem";
 import DocService from "@/service/DocService";
+import DocUtils from "@/util/DocUtils";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -28,6 +29,7 @@ export default defineComponent({
     };
   },
   methods: {
+    docId2Url: DocUtils.docId2Url,
     show() {
       this.showDrawer = true;
       this.readHistoryList = DocService.getReadHistoryList()
