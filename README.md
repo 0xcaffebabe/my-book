@@ -1,5 +1,7 @@
 # my-book
 
+该仓库已迁移到<https://github.com/0xcaffebabe/note>
+
 忍受够了Gitbook动辄半小时的打包时间 VuePress无法满足要求且有许多限制
 
 理念：
